@@ -1,4 +1,7 @@
+import os
 from unittest.mock import patch
+
+import pytest
 
 from conftest import DIN, make_fake_pw
 from homeassistant import config_entries
@@ -7,6 +10,7 @@ from homeassistant.core import HomeAssistant
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.pypowerwall.const import (
+    AUTH_CACHE_FILENAMES,
     CONF_AUTHPATH,
     CONF_CONN_TYPE,
     CONF_GW_PWD,
@@ -152,11 +156,17 @@ async def test_local_flow_success(hass: HomeAssistant) -> None:
     assert result2["data"][CONF_CONN_TYPE] == CONN_TYPE_LOCAL
 
 
-async def test_cloud_flow_success(hass: HomeAssistant) -> None:
+def _auth_dir(tmp_path, conn_type: str):
+    (tmp_path / AUTH_CACHE_FILENAMES[conn_type]).write_text("{}")
+    return str(tmp_path)
+
+
+async def test_cloud_flow_success(hass: HomeAssistant, tmp_path) -> None:
+    authpath = _auth_dir(tmp_path, CONN_TYPE_CLOUD)
     with patch(CONNECT_TARGET, return_value=make_fake_pw(site_name="Cloud Site")):
         result = await _select_menu(hass, await _start_menu(hass), CONN_TYPE_CLOUD)
         result2 = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {CONF_AUTHPATH: "/config/pypowerwall"}
+            result["flow_id"], {CONF_AUTHPATH: authpath}
         )
 
     assert result2["type"] == "create_entry"
@@ -164,19 +174,76 @@ async def test_cloud_flow_success(hass: HomeAssistant) -> None:
     assert result2["title"] == "Cloud Site"
     assert result2["data"] == {
         CONF_CONN_TYPE: CONN_TYPE_CLOUD,
-        CONF_AUTHPATH: "/config/pypowerwall",
+        CONF_AUTHPATH: authpath,
     }
 
 
-async def test_fleetapi_flow_success(hass: HomeAssistant) -> None:
+async def test_fleetapi_flow_success(hass: HomeAssistant, tmp_path) -> None:
+    authpath = _auth_dir(tmp_path, CONN_TYPE_FLEETAPI)
     with patch(CONNECT_TARGET, return_value=make_fake_pw()):
         result = await _select_menu(hass, await _start_menu(hass), CONN_TYPE_FLEETAPI)
         result2 = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {CONF_AUTHPATH: "/config/pypowerwall"}
+            result["flow_id"], {CONF_AUTHPATH: authpath}
         )
 
     assert result2["type"] == "create_entry"
     assert result2["data"][CONF_CONN_TYPE] == CONN_TYPE_FLEETAPI
+
+
+@pytest.mark.parametrize("conn_type", [CONN_TYPE_CLOUD, CONN_TYPE_FLEETAPI])
+@pytest.mark.parametrize("exists", [False, True])
+async def test_file_based_flow_rejects_a_missing_auth_file(
+    hass: HomeAssistant, tmp_path, conn_type: str, exists: bool
+) -> None:
+    """A missing directory or a directory without the file never reaches pypowerwall."""
+    authpath = str(tmp_path if exists else tmp_path / "nope")
+    with patch(CONNECT_TARGET) as powerwall:
+        result = await _select_menu(hass, await _start_menu(hass), conn_type)
+        result2 = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {CONF_AUTHPATH: authpath}
+        )
+
+    assert result2["type"] == "form"
+    assert result2["errors"] == {"base": "auth_cache_not_found"}
+    powerwall.assert_not_called()
+
+
+@pytest.mark.skipif(os.geteuid() == 0, reason="root ignores directory permissions")
+async def test_cloud_flow_rejects_a_read_only_auth_directory(
+    hass: HomeAssistant, tmp_path
+) -> None:
+    authpath = _auth_dir(tmp_path, CONN_TYPE_CLOUD)
+    tmp_path.chmod(0o500)
+    try:
+        with patch(CONNECT_TARGET) as powerwall:
+            result = await _select_menu(hass, await _start_menu(hass), CONN_TYPE_CLOUD)
+            result2 = await hass.config_entries.flow.async_configure(
+                result["flow_id"], {CONF_AUTHPATH: authpath}
+            )
+    finally:
+        tmp_path.chmod(0o700)
+
+    assert result2["errors"] == {"base": "auth_cache_not_writable"}
+    powerwall.assert_not_called()
+
+
+async def test_reconfigure_cloud_rejects_a_missing_auth_file(
+    hass: HomeAssistant, tmp_path
+) -> None:
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=DIN,
+        data={CONF_CONN_TYPE: CONN_TYPE_CLOUD, CONF_AUTHPATH: "/old"},
+    )
+    entry.add_to_hass(hass)
+
+    result = await entry.start_reconfigure_flow(hass)
+    result2 = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_AUTHPATH: str(tmp_path)}
+    )
+
+    assert result2["type"] == "form"
+    assert result2["errors"] == {"base": "auth_cache_not_found"}
 
 
 async def test_tedapi_v1r_flow_success(hass: HomeAssistant) -> None:

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from typing import Any
 
 import voluptuous as vol
@@ -14,6 +15,7 @@ from homeassistant.helpers.selector import NumberSelector, NumberSelectorConfig,
 import pypowerwall
 
 from .const import (
+    AUTH_CACHE_FILENAMES,
     CONF_AUTHPATH,
     CONF_CONN_TYPE,
     CONF_GW_PWD,
@@ -110,6 +112,24 @@ class PowerwallConnectionError(Exception):
     """Raised when the Powerwall gateway cannot be reached or authenticated."""
 
 
+class AuthCacheError(Exception):
+    """Raised when a Cloud/FleetAPI auth directory can't be used; error_key is the form error."""
+
+    error_key = "unknown"
+
+
+class AuthCacheNotFoundError(AuthCacheError):
+    """Raised when the auth directory doesn't contain the file pypowerwall reads."""
+
+    error_key = "auth_cache_not_found"
+
+
+class AuthCacheNotWritableError(AuthCacheError):
+    """Raised when the auth directory is read-only, so refreshed tokens couldn't be saved."""
+
+    error_key = "auth_cache_not_writable"
+
+
 class MissingPasswordError(Exception):
     """Raised when a v1r entry supplies neither the gateway nor the customer password."""
 
@@ -123,6 +143,18 @@ def _connect_and_get_info(conn_type: str, data: dict[str, Any]) -> tuple[str, st
     if not din:
         raise PowerwallConnectionError(f"Connected ({conn_type} mode) but could not read a DIN")
     return din, pw.site_name()
+
+
+def _check_auth_cache(conn_type: str, data: dict[str, Any]) -> None:
+    """Fail with a specific error when a Cloud/FleetAPI auth directory is unusable."""
+    filename = AUTH_CACHE_FILENAMES.get(conn_type)
+    if filename is None:
+        return
+    authpath = os.path.expanduser(data[CONF_AUTHPATH])
+    if not os.path.isfile(os.path.join(authpath, filename)):
+        raise AuthCacheNotFoundError
+    if not os.access(authpath, os.W_OK):
+        raise AuthCacheNotWritableError
 
 
 async def _validate_input(
@@ -139,6 +171,7 @@ async def _validate_input(
         data.get(CONF_GW_PWD) or data.get(CONF_PASSWORD)
     ):
         raise MissingPasswordError
+    await hass.async_add_executor_job(_check_auth_cache, conn_type, data)
     return await hass.async_add_executor_job(_connect_and_get_info, conn_type, data)
 
 
@@ -163,6 +196,8 @@ class PypowerwallConfigFlow(ConfigFlow, domain=DOMAIN):
                 din, site_name = await _validate_input(self.hass, conn_type, data)
             except MissingPasswordError:
                 errors["base"] = "missing_password"
+            except AuthCacheError as err:
+                errors["base"] = err.error_key
             except PowerwallConnectionError:
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001 - surface unexpected errors as a generic failure
@@ -208,6 +243,8 @@ class PypowerwallConfigFlow(ConfigFlow, domain=DOMAIN):
                 din, _site_name = await _validate_input(self.hass, conn_type, data)
             except MissingPasswordError:
                 errors["base"] = "missing_password"
+            except AuthCacheError as err:
+                errors["base"] = err.error_key
             except PowerwallConnectionError:
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001 - surface unexpected errors as a generic failure

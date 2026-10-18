@@ -1,9 +1,10 @@
 import logging
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 from homeassistant.const import CONF_EMAIL, CONF_HOST, CONF_PASSWORD
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
@@ -27,6 +28,7 @@ from custom_components.pypowerwall.coordinator import (
     PowerwallData,
     PowerwallDataUpdateCoordinator,
     _fetch_data,
+    async_connect_powerwall,
     build_powerwall_kwargs,
 )
 
@@ -398,3 +400,33 @@ class TestExtractFans:
 
         assert _extract_fans(None) == {}
         assert _extract_fans("garbage") == {}
+
+
+class TestConnectFailureMessage:
+    @pytest.mark.parametrize(
+        ("conn_type", "filename"),
+        [(CONN_TYPE_CLOUD, ".pypowerwall.auth"), (CONN_TYPE_FLEETAPI, ".pypowerwall.fleetapi")],
+    )
+    async def test_file_based_modes_hint_at_the_auth_directory(
+        self, hass: HomeAssistant, conn_type: str, filename: str
+    ):
+        pw = MagicMock()
+        pw.is_connected.return_value = False
+        target = "custom_components.pypowerwall.coordinator.pypowerwall.Powerwall"
+        with patch(target, return_value=pw), pytest.raises(ConfigEntryNotReady) as exc:
+            await async_connect_powerwall(hass, conn_type, {CONF_AUTHPATH: "/auth"})
+
+        assert f"({conn_type} mode)" in str(exc.value)
+        assert filename in str(exc.value)
+        assert "writable" in str(exc.value)
+
+    async def test_other_modes_keep_the_plain_message(self, hass: HomeAssistant):
+        pw = MagicMock()
+        pw.is_connected.return_value = False
+        target = "custom_components.pypowerwall.coordinator.pypowerwall.Powerwall"
+        with patch(target, return_value=pw), pytest.raises(ConfigEntryNotReady) as exc:
+            await async_connect_powerwall(
+                hass, CONN_TYPE_TEDAPI, {CONF_HOST: "h", CONF_GW_PWD: "g"}
+            )
+
+        assert str(exc.value) == "Unable to connect to Powerwall (tedapi mode)"
