@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.0](https://github.com/jackrayner/ha-pypowerwall/compare/0.12.2...0.13.0) (2026-10-18)
+
+
+### Features
+
+* bump pypowerwall to 0.21.0 and pin connections to their configured mode ([50d5ade](https://github.com/jackrayner/ha-pypowerwall/commit/50d5ade47a6fff21d57569256dee23b210b4e389))
+* bump pypowerwall to 0.21.0 and pin connections to their configured mode ([f9c853a](https://github.com/jackrayner/ha-pypowerwall/commit/f9c853a95f5f9d0e3cbd0fc625644454b3d1ef83))
+
 ## [0.12.2](https://github.com/jackrayner/ha-pypowerwall/compare/0.12.1...0.12.2) (2026-10-09)
 
 
