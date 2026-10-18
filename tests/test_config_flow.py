@@ -2,7 +2,6 @@ import os
 from unittest.mock import patch
 
 import pytest
-
 from conftest import DIN, make_fake_pw
 from homeassistant import config_entries
 from homeassistant.const import CONF_EMAIL, CONF_HOST, CONF_PASSWORD
