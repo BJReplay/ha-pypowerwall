@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Fann ingen .pypowerwall.auth- (Cloud) eller .pypowerwall.fleetapi-fil (FleetAPI) i den mappa. Skriv inn stien slik Home Assistant ser han, til dømes /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant kan ikkje skrive til den mappa. Skrivetilgang trengst for å lagre fornya Tesla-tokens.",
       "cannot_connect": "Klarte ikkje å kopla til. Kontroller tilkoplingsopplysningane og prøv igjen.",
       "unknown": "Uventa feil"
     },

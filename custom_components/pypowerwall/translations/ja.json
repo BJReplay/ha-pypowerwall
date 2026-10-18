@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "そのディレクトリに .pypowerwall.auth (Cloud) または .pypowerwall.fleetapi (FleetAPI) ファイルが見つかりません。Home Assistant から見えるパスを入力してください(例: /config/pypowerwall)。",
+      "auth_cache_not_writable": "Home Assistant はそのディレクトリに書き込めません。更新された Tesla トークンを保存するには書き込み権限が必要です。",
       "cannot_connect": "接続に失敗しました。接続情報を確認して、もう一度お試しください。",
       "unknown": "予期しないエラー"
     },

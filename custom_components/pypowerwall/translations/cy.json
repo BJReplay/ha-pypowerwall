@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Heb ganfod ffeil .pypowerwall.auth (Cloud) na .pypowerwall.fleetapi (FleetAPI) yn y cyfeiriadur hwnnw. Rhowch y llwybr fel mae Home Assistant yn ei weld, er enghraifft /config/pypowerwall.",
+      "auth_cache_not_writable": "Ni all Home Assistant ysgrifennu i'r cyfeiriadur hwnnw. Mae angen mynediad ysgrifennu i gadw tocynnau Tesla wedi'u hadnewyddu.",
       "cannot_connect": "Wedi methu cysylltu. Gwiriwch fanylion y cysylltiad a rhowch gynnig arall arni.",
       "unknown": "Gwall annisgwyl"
     },

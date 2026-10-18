@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Selles kaustas ei leitud faili .pypowerwall.auth (Cloud) ega .pypowerwall.fleetapi (FleetAPI). Sisesta tee nii, nagu Home Assistant seda näeb, näiteks /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant ei saa sellesse kausta kirjutada. Uuendatud Tesla tokenite salvestamiseks on vaja kirjutusõigust.",
       "cannot_connect": "Ühendumine ebaõnnestus. Kontrolli ühenduse andmeid ja proovi uuesti.",
       "unknown": "Ootamatu viga"
     },

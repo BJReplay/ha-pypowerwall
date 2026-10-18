@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Nem található .pypowerwall.auth (Cloud) vagy .pypowerwall.fleetapi (FleetAPI) fájl a megadott könyvtárban. Az elérési utat úgy add meg, ahogy a Home Assistant látja, például /config/pypowerwall.",
+      "auth_cache_not_writable": "A Home Assistant nem tud írni ebbe a könyvtárba. A megújított Tesla-tokenek mentéséhez írási jogosultság szükséges.",
       "cannot_connect": "Sikertelen kapcsolódás. Ellenőrizze a kapcsolat adatait, és próbálja újra.",
       "unknown": "Váratlan hiba"
     },

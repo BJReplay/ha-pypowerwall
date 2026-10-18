@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "ამ დირექტორიაში ფაილი .pypowerwall.auth (Cloud) ან .pypowerwall.fleetapi (FleetAPI) ვერ მოიძებნა. შეიყვანეთ გზა ისე, როგორც მას Home Assistant ხედავს, მაგალითად /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant-ს ამ დირექტორიაში ჩაწერა არ შეუძლია. განახლებული Tesla ტოკენების შესანახად საჭიროა ჩაწერის უფლება.",
       "cannot_connect": "დაკავშირება ვერ მოხერხდა. შეამოწმეთ კავშირის დეტალები და სცადეთ ხელახლა.",
       "unknown": "მოულოდნელი შეცდომა"
     },

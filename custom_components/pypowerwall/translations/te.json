@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "ఆ డైరెక్టరీలో .pypowerwall.auth (Cloud) లేదా .pypowerwall.fleetapi (FleetAPI) ఫైల్ కనబడలేదు. Home Assistant చూసే విధంగా మార్గాన్ని నమోదు చేయండి, ఉదాహరణకు /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant ఆ డైరెక్టరీలో రాయలేదు. నవీకరించిన Tesla టోకెన్‌లను సేవ్ చేయడానికి రాయడానికి అనుమతి అవసరం.",
       "cannot_connect": "కనెక్ట్ చేయడంలో విఫలమైంది. కనెక్షన్ వివరాలను తనిఖీ చేసి, మళ్లీ ప్రయత్నించండి.",
       "unknown": "అనుకోని లోపం"
     },

@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Šiame kataloge nerastas failas .pypowerwall.auth (Cloud) arba .pypowerwall.fleetapi (FleetAPI). Įveskite kelią taip, kaip jį mato Home Assistant, pavyzdžiui, /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant negali rašyti į šį katalogą. Atnaujintiems Tesla raktams išsaugoti reikalinga rašymo teisė.",
       "cannot_connect": "Nepavyko prisijungti. Patikrinkite ryšio duomenis ir bandykite dar kartą.",
       "unknown": "Netikėta klaida"
     },

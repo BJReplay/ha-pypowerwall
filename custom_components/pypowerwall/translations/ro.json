@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Nu s-a găsit niciun fișier .pypowerwall.auth (Cloud) sau .pypowerwall.fleetapi (FleetAPI) în acel director. Introdu calea așa cum o vede Home Assistant, de exemplu /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant nu poate scrie în acel director. Este necesar acces de scriere pentru a salva jetoanele Tesla reînnoite.",
       "cannot_connect": "Conectarea a eșuat. Verificați detaliile conexiunii și încercați din nou.",
       "unknown": "Eroare neașteptată"
     },

@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Engin .pypowerwall.auth (Cloud) eða .pypowerwall.fleetapi (FleetAPI) skrá fannst í þeirri möppu. Sláðu inn slóðina eins og Home Assistant sér hana, til dæmis /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant getur ekki skrifað í þá möppu. Skrifaðgangur er nauðsynlegur til að vista endurnýjuð Tesla-auðkenni.",
       "cannot_connect": "Tenging mistókst. Athugaðu tengingarupplýsingarnar og reyndu aftur.",
       "unknown": "Óvænt villa"
     },

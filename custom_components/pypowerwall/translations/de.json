@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Im angegebenen Verzeichnis wurde keine Datei .pypowerwall.auth (Cloud) oder .pypowerwall.fleetapi (FleetAPI) gefunden. Gib den Pfad so an, wie Home Assistant ihn sieht, z. B. /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant kann nicht in dieses Verzeichnis schreiben. Schreibzugriff ist nötig, um erneuerte Tesla-Tokens zu speichern.",
       "cannot_connect": "Verbindung fehlgeschlagen. Verbindungsdaten überprüfen und erneut versuchen.",
       "unknown": "Unerwarteter Fehler"
     },

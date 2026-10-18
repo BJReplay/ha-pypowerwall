@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Níor aimsíodh comhad .pypowerwall.auth (Cloud) ná .pypowerwall.fleetapi (FleetAPI) sa chomhadlann sin. Cuir isteach an cosán mar a fheiceann Home Assistant é, mar shampla /config/pypowerwall.",
+      "auth_cache_not_writable": "Ní féidir le Home Assistant scríobh sa chomhadlann sin. Tá rochtain scríofa de dhíth chun comharthaí Tesla athnuaite a shábháil.",
       "cannot_connect": "Theip ar an gceangal. Seiceáil sonraí an cheangail agus bain triail eile as.",
       "unknown": "Earráid gan choinne"
     },

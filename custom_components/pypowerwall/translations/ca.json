@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "No s'ha trobat cap fitxer .pypowerwall.auth (Cloud) ni .pypowerwall.fleetapi (FleetAPI) en aquest directori. Introduïu la ruta tal com la veu Home Assistant, per exemple /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant no pot escriure en aquest directori. Necessita accés d'escriptura per desar els tokens de Tesla actualitzats.",
       "cannot_connect": "No s'ha pogut connectar. Comproveu les dades de connexió i torneu-ho a provar.",
       "unknown": "Error inesperat"
     },

@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Në atë drejtori nuk u gjet asnjë skedar .pypowerwall.auth (Cloud) ose .pypowerwall.fleetapi (FleetAPI). Vendosni shtegun ashtu siç e sheh Home Assistant, për shembull /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant nuk mund të shkruajë në atë drejtori. Nevojitet qasje shkrimi për të ruajtur tokenët e rinovuar të Tesla-s.",
       "cannot_connect": "Lidhja dështoi. Kontrolloni detajet e lidhjes dhe provoni përsëri.",
       "unknown": "Gabim i papritur"
     },

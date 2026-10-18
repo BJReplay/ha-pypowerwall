@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Không tìm thấy tệp .pypowerwall.auth (Cloud) hoặc .pypowerwall.fleetapi (FleetAPI) trong thư mục đó. Hãy nhập đường dẫn như Home Assistant nhìn thấy, ví dụ /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant không thể ghi vào thư mục đó. Cần quyền ghi để lưu mã thông báo Tesla đã được làm mới.",
       "cannot_connect": "Kết nối không thành công. Vui lòng kiểm tra thông tin kết nối và thử lại.",
       "unknown": "Lỗi không xác định"
     },

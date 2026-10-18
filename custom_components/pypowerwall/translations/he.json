@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "לא נמצא קובץ .pypowerwall.auth (Cloud) או .pypowerwall.fleetapi (FleetAPI) בתיקייה זו. הזינו את הנתיב כפי ש-Home Assistant רואה אותו, למשל /config/pypowerwall.",
+      "auth_cache_not_writable": "‏Home Assistant אינו יכול לכתוב לתיקייה זו. נדרשת הרשאת כתיבה כדי לשמור אסימוני Tesla מחודשים.",
       "cannot_connect": "ההתחברות נכשלה. בדקו את פרטי החיבור ונסו שוב.",
       "unknown": "שגיאה לא צפויה"
     },

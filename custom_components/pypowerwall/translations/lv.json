@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Šajā direktorijā nav atrasts fails .pypowerwall.auth (Cloud) vai .pypowerwall.fleetapi (FleetAPI). Ievadiet ceļu tā, kā to redz Home Assistant, piemēram, /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant nevar rakstīt šajā direktorijā. Atjaunoto Tesla pilnvaru saglabāšanai nepieciešamas rakstīšanas tiesības.",
       "cannot_connect": "Neizdevās izveidot savienojumu. Pārbaudiet savienojuma datus un mēģiniet vēlreiz.",
       "unknown": "Negaidīta kļūda"
     },

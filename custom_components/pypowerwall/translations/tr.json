@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Bu dizinde .pypowerwall.auth (Cloud) veya .pypowerwall.fleetapi (FleetAPI) dosyası bulunamadı. Yolu Home Assistant'ın gördüğü şekilde girin, örneğin /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant bu dizine yazamıyor. Yenilenen Tesla belirteçlerini kaydetmek için yazma erişimi gerekir.",
       "cannot_connect": "Bağlanılamadı. Bağlantı bilgilerini kontrol edip tekrar deneyin.",
       "unknown": "Beklenmeyen hata"
     },

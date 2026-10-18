@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Այդ գրացուցակում .pypowerwall.auth (Cloud) կամ .pypowerwall.fleetapi (FleetAPI) ֆայլ չի գտնվել։ Մուտքագրեք ուղին այնպես, ինչպես այն տեսնում է Home Assistant-ը, օրինակ՝ /config/pypowerwall։",
+      "auth_cache_not_writable": "Home Assistant-ը չի կարող գրել այդ գրացուցակում։ Թարմացված Tesla նշանները պահելու համար անհրաժեշտ է գրելու թույլտվություն։",
       "cannot_connect": "Կապը չհաջողվեց հաստատել: Ստուգեք կապի տվյալները և կրկին փորձեք:",
       "unknown": "Անսպասելի սխալ"
     },
