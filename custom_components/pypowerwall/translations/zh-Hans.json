@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "在该目录中未找到 .pypowerwall.auth (Cloud) 或 .pypowerwall.fleetapi (FleetAPI) 文件。请按 Home Assistant 所见的路径输入,例如 /config/pypowerwall。",
+      "auth_cache_not_writable": "Home Assistant 无法写入该目录。保存刷新后的 Tesla 令牌需要写入权限。",
       "cannot_connect": "连接失败。请检查连接详情后重试。",
       "unknown": "发生意外错误"
     },

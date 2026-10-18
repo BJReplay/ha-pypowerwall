@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Tidak ada berkas .pypowerwall.auth (Cloud) atau .pypowerwall.fleetapi (FleetAPI) di direktori tersebut. Masukkan jalur seperti yang dilihat Home Assistant, misalnya /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant tidak dapat menulis ke direktori tersebut. Akses tulis diperlukan untuk menyimpan token Tesla yang diperbarui.",
       "cannot_connect": "Gagal terhubung. Periksa detail koneksi dan coba lagi.",
       "unknown": "Terjadi kesalahan yang tidak terduga"
     },

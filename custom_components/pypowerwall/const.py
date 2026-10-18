@@ -25,6 +25,13 @@ CONN_TYPE_FLEETAPI = "fleetapi"
 # path rather than inline credentials.
 FILE_BASED_CONN_TYPES = (CONN_TYPE_CLOUD, CONN_TYPE_FLEETAPI, CONN_TYPE_TEDAPI_V1R)
 
+# The file pypowerwall reads from `authpath` in each mode. pypowerwall also writes
+# refreshed tokens back into that directory, so it must be writable too.
+AUTH_CACHE_FILENAMES = {
+    CONN_TYPE_CLOUD: ".pypowerwall.auth",
+    CONN_TYPE_FLEETAPI: ".pypowerwall.fleetapi",
+}
+
 # set_grid_charging()/get_grid_charging() and set_grid_export()/get_grid_export() require
 # Cloud or FleetAPI mode per pypowerwall's own docstrings -- its local/TEDAPI/hybrid
 # backends don't implement grid charging/export control at all. Used to gate the

@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Δεν βρέθηκε αρχείο .pypowerwall.auth (Cloud) ή .pypowerwall.fleetapi (FleetAPI) σε αυτόν τον κατάλογο. Εισαγάγετε τη διαδρομή όπως την βλέπει το Home Assistant, π.χ. /config/pypowerwall.",
+      "auth_cache_not_writable": "Το Home Assistant δεν μπορεί να γράψει σε αυτόν τον κατάλογο. Απαιτείται πρόσβαση εγγραφής για την αποθήκευση των ανανεωμένων διακριτικών Tesla.",
       "cannot_connect": "Η σύνδεση απέτυχε. Ελέγξτε τα στοιχεία σύνδεσης και δοκιμάστε ξανά.",
       "unknown": "Απροσδόκητο σφάλμα"
     },

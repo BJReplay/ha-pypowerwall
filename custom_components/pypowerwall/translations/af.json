@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Geen .pypowerwall.auth- (Cloud) of .pypowerwall.fleetapi-lêer (FleetAPI) in daardie gids gevind nie. Voer die pad in soos Home Assistant dit sien, byvoorbeeld /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant kan nie na daardie gids skryf nie. Dit het skryftoegang nodig om vernuwede Tesla-tokens te stoor.",
       "cannot_connect": "Kon nie verbind nie. Kontroleer die verbindingsbesonderhede en probeer weer.",
       "unknown": "Onverwagte fout"
     },

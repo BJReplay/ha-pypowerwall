@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "அந்த அடைவில் .pypowerwall.auth (Cloud) அல்லது .pypowerwall.fleetapi (FleetAPI) கோப்பு கிடைக்கவில்லை. Home Assistant பார்க்கும் வகையில் பாதையை உள்ளிடவும், எடுத்துக்காட்டாக /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant அந்த அடைவில் எழுத முடியாது. புதுப்பிக்கப்பட்ட Tesla டோக்கன்களைச் சேமிக்க எழுதும் அனுமதி தேவை.",
       "cannot_connect": "இணைக்க முடியவில்லை. இணைப்பு விவரங்களைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
       "unknown": "எதிர்பாராத பிழை"
     },

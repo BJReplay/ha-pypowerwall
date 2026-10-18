@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "ไม่พบไฟล์ .pypowerwall.auth (Cloud) หรือ .pypowerwall.fleetapi (FleetAPI) ในไดเรกทอรีนั้น โปรดป้อนพาธตามที่ Home Assistant มองเห็น เช่น /config/pypowerwall",
+      "auth_cache_not_writable": "Home Assistant เขียนลงในไดเรกทอรีนั้นไม่ได้ ต้องมีสิทธิ์เขียนเพื่อบันทึกโทเค็น Tesla ที่ต่ออายุแล้ว",
       "cannot_connect": "เชื่อมต่อไม่สำเร็จ กรุณาตรวจสอบรายละเอียดการเชื่อมต่อแล้วลองใหม่อีกครั้ง",
       "unknown": "เกิดข้อผิดพลาดที่ไม่คาดคิด"
     },

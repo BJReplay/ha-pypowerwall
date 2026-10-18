@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Ez da .pypowerwall.auth (Cloud) edo .pypowerwall.fleetapi (FleetAPI) fitxategirik aurkitu direktorio horretan. Sartu bidea Home Assistant-ek ikusten duen moduan, adibidez /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant-ek ezin du direktorio horretan idatzi. Idazteko baimena behar du berritutako Tesla tokenak gordetzeko.",
       "cannot_connect": "Konexioak huts egin du. Egiaztatu konexio-xehetasunak eta saiatu berriro.",
       "unknown": "Ustekabeko errorea"
     },

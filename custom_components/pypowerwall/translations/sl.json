@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "V tem imeniku ni bilo najdene datoteke .pypowerwall.auth (Cloud) ali .pypowerwall.fleetapi (FleetAPI). Vnesite pot, kot jo vidi Home Assistant, na primer /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant ne more pisati v ta imenik. Za shranjevanje obnovljenih žetonov Tesla je potreben dostop za pisanje.",
       "cannot_connect": "Povezava ni uspela. Preverite podatke o povezavi in poskusite znova.",
       "unknown": "Nepričakovana napaka"
     },

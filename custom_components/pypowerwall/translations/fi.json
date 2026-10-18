@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Hakemistosta ei löytynyt tiedostoa .pypowerwall.auth (Cloud) tai .pypowerwall.fleetapi (FleetAPI). Anna polku sellaisena kuin Home Assistant sen näkee, esimerkiksi /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant ei voi kirjoittaa kyseiseen hakemistoon. Kirjoitusoikeus tarvitaan uusittujen Tesla-tunnisteiden tallentamiseen.",
       "cannot_connect": "Yhteyden muodostaminen epäonnistui. Tarkista yhteystiedot ja yritä uudelleen.",
       "unknown": "Odottamaton virhe"
     },

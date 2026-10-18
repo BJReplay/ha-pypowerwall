@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Neniu dosiero .pypowerwall.auth (Cloud) aŭ .pypowerwall.fleetapi (FleetAPI) troviĝis en tiu dosierujo. Enmetu la vojon tiel, kiel Home Assistant vidas ĝin, ekzemple /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant ne povas skribi en tiu dosierujo. Skribrajto necesas por konservi renovigitajn Tesla-ĵetonojn.",
       "cannot_connect": "Konekto malsukcesis. Kontrolu la konektajn detalojn kaj provu denove.",
       "unknown": "Neatendita eraro"
     },

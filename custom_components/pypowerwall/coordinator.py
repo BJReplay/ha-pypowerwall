@@ -17,6 +17,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 import pypowerwall
 
 from .const import (
+    AUTH_CACHE_FILENAMES,
     CONF_AUTHPATH,
     CONF_CONN_TYPE,
     CONF_GW_PWD,
@@ -240,7 +241,14 @@ async def async_connect_powerwall(
     def _connect() -> pypowerwall.Powerwall:
         pw = pypowerwall.Powerwall(**build_powerwall_kwargs(conn_type, data))
         if not pw.is_connected():
-            raise ConfigEntryNotReady(f"Unable to connect to Powerwall ({conn_type} mode)")
+            hint = ""
+            if conn_type in AUTH_CACHE_FILENAMES:
+                hint = (
+                    f" -- check that {AUTH_CACHE_FILENAMES[conn_type]} exists in the configured"
+                    " directory as Home Assistant sees it, that the directory is writable, and"
+                    " that the login hasn't expired (re-run `python -m pypowerwall setup`)"
+                )
+            raise ConfigEntryNotReady(f"Unable to connect to Powerwall ({conn_type} mode){hint}")
         return pw
 
     return await hass.async_add_executor_job(_connect)

@@ -114,6 +114,8 @@
       }
     },
     "error": {
+      "auth_cache_not_found": "Gjin .pypowerwall.auth- (Cloud) of .pypowerwall.fleetapi-bestân (FleetAPI) fûn yn dy map. Fier it paad yn sa't Home Assistant it sjocht, bygelyks /config/pypowerwall.",
+      "auth_cache_not_writable": "Home Assistant kin net nei dy map skriuwe. Skriuwtagong is nedich om fernijde Tesla-tokens op te slaan.",
       "cannot_connect": "Ferbining mislearre. Kontrolearje de ferbiningsgegevens en probearje it opnij.",
       "unknown": "Unferwachte flater"
     },
