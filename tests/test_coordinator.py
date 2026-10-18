@@ -203,6 +203,7 @@ class TestBuildPowerwallKwargs:
             "host": "10.0.0.1",
             "email": "owner@example.com",
             "password": "pw",
+            "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
 
@@ -213,6 +214,7 @@ class TestBuildPowerwallKwargs:
         assert kwargs == {
             "host": "192.168.91.1",
             "gw_pwd": "gw",
+            "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
 
@@ -231,6 +233,7 @@ class TestBuildPowerwallKwargs:
             "email": "e@example.com",
             "password": "p",
             "gw_pwd": "g",
+            "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
 
@@ -288,6 +291,7 @@ class TestBuildPowerwallKwargs:
         assert kwargs == {
             "cloudmode": True,
             "authpath": "/auth",
+            "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
 
@@ -299,6 +303,7 @@ class TestBuildPowerwallKwargs:
             "cloudmode": True,
             "authpath": "/auth",
             "siteid": "123",
+            "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
 
@@ -308,6 +313,7 @@ class TestBuildPowerwallKwargs:
             "fleetapi": True,
             "cloudmode": True,
             "authpath": "/auth",
+            "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
 
@@ -320,8 +326,16 @@ class TestBuildPowerwallKwargs:
             "cloudmode": True,
             "authpath": "/auth",
             "siteid": "456",
+            "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
+
+    def test_v1r_keeps_library_failover_default(self):
+        kwargs = build_powerwall_kwargs(
+            CONN_TYPE_TEDAPI_V1R,
+            {CONF_HOST: "h", CONF_GW_PWD: "g", CONF_RSA_KEY_PATH: "/key.pem"},
+        )
+        assert "failover" not in kwargs
 
     def test_unknown_conn_type_raises(self):
         with pytest.raises(ValueError):

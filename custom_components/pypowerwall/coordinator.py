@@ -226,6 +226,8 @@ def build_powerwall_kwargs(conn_type: str, data: Mapping[str, Any]) -> dict[str,
             kwargs["siteid"] = data[CONF_SITEID]
     else:
         raise ValueError(f"Unknown pypowerwall connection type: {conn_type}")
+    if conn_type != CONN_TYPE_TEDAPI_V1R:
+        kwargs["failover"] = False
     kwargs["timeout"] = POWERWALL_REQUEST_TIMEOUT
     return kwargs
 
