@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.1](https://github.com/jackrayner/ha-pypowerwall/compare/0.13.0...0.13.1) (2026-10-18)
+
+
+### Bug Fixes
+
+* explain Cloud/FleetAPI auth-directory problems instead of a generic connect failure ([747bbe1](https://github.com/jackrayner/ha-pypowerwall/commit/747bbe10a3e2ab975f3700de3cd0175cc5f0c158))
+* explain Cloud/FleetAPI auth-directory problems instead of a generic connect failure ([f2849fa](https://github.com/jackrayner/ha-pypowerwall/commit/f2849fa5dca3d349ced488455c654b4e47ba7190))
+
 ## [0.13.0](https://github.com/jackrayner/ha-pypowerwall/compare/0.12.2...0.13.0) (2026-10-18)
 
 
