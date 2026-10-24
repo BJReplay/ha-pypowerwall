@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import logging
+import os
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -186,6 +188,24 @@ class PowerwallDataUpdateCoordinator(DataUpdateCoordinator[PowerwallData]):
         return data
 
 
+def _cloud_auth_email(authpath: str) -> str | None:
+    """Return the Tesla account email the Cloud auth file's tokens are stored under.
+
+    The file is keyed by email and pypowerwall only looks the cached token up under the
+    email it is given. It reads the email from the file itself only when it auto-selects
+    the mode, which an explicit ``cloudmode=True`` bypasses.
+    """
+    path = os.path.join(os.path.expanduser(authpath), AUTH_CACHE_FILENAMES[CONN_TYPE_CLOUD])
+    try:
+        with open(path, encoding="utf-8") as f:
+            auth = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if isinstance(auth, dict) and auth:
+        return next(iter(auth))
+    return None
+
+
 def build_powerwall_kwargs(conn_type: str, data: Mapping[str, Any]) -> dict[str, Any]:
     """Translate config entry data into pypowerwall.Powerwall() constructor kwargs.
 
@@ -219,6 +239,8 @@ def build_powerwall_kwargs(conn_type: str, data: Mapping[str, Any]) -> dict[str,
             kwargs["wifi_host"] = data[CONF_WIFI_HOST]
     elif conn_type == CONN_TYPE_CLOUD:
         kwargs = {"cloudmode": True, "authpath": data[CONF_AUTHPATH]}
+        if email := _cloud_auth_email(data[CONF_AUTHPATH]):
+            kwargs["email"] = email
         if data.get(CONF_SITEID):
             kwargs["siteid"] = data[CONF_SITEID]
     elif conn_type == CONN_TYPE_FLEETAPI:
