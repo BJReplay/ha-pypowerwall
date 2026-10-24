@@ -38,12 +38,12 @@ Note: Cloud and FleetAPI modes poll Tesla's cloud API rather than the local gate
 
 The three file-based modes (Cloud, FleetAPI, TEDAPI v1r) authenticate via an artifact pypowerwall's own CLI setup tools produce — Tesla's login flow needs a real browser (or a token you paste in headlessly), so there's no way to complete it from a single Home Assistant form. Run the relevant `setup`/`register` command once, on any machine, then tell the integration where the resulting file lives.
 
-For Cloud and FleetAPI, enter the directory **as Home Assistant sees it** (for example `/config/pypowerwall` on Home Assistant OS or a container, not the path on the machine where you ran `setup`). The directory must be writable, because pypowerwall saves refreshed Tesla tokens back into it. Cloud mode is selected by picking "Cloud mode" in the connection menu; no gateway host is needed.
+For Cloud and FleetAPI, enter the directory **as Home Assistant sees it** (for example `/config/pypowerwall` on Home Assistant OS or a container, not the path on the machine where you ran `setup`). The directory must be writable, because pypowerwall saves refreshed Tesla tokens back into it, and persistent: on Home Assistant OS or a container, keep it under `/config` (or `/share`), since other paths are inside the container and are wiped when Home Assistant updates. Tesla invalidates each refresh token once it's used, so give Home Assistant its own copy of the file rather than sharing one with pypowerwall running elsewhere (each copy's refreshes break the other). Cloud mode is selected by picking "Cloud mode" in the connection menu; no gateway host is needed.
 
 ### Cloud mode troubleshooting
 
 - **"No .pypowerwall.auth … file found"**: the path isn't visible to Home Assistant, or the file is missing. Copy `.pypowerwall.auth` into a directory under `/config` and enter that path.
-- **"Unable to connect to Powerwall (cloud mode)" with a valid file**: the login in the file has probably expired (a log line such as `Login failure - MissingCodeError` means Tesla rejected it). Re-run `python -m pypowerwall setup` and replace the file.
+- **"Unable to connect to Powerwall (cloud mode)" with a valid file**: the login in the file has probably expired (a log line such as `Login failure - MissingCodeError` means Tesla rejected it). Re-run `python -m pypowerwall setup` and replace the file. A running Cloud entry picks up the new file within about five minutes of its next failed poll, without a restart.
 
 ### Localization
 

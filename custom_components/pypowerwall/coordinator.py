@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import time
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -20,6 +21,7 @@ import pypowerwall
 
 from .const import (
     AUTH_CACHE_FILENAMES,
+    CLOUD_RECONNECT_INTERVAL,
     CONF_AUTHPATH,
     CONF_CONN_TYPE,
     CONF_GW_PWD,
@@ -169,8 +171,42 @@ class PowerwallDataUpdateCoordinator(DataUpdateCoordinator[PowerwallData]):
         )
         self.pw = pw
         self.conn_type = entry.data[CONF_CONN_TYPE]
+        self._last_reconnect = time.monotonic()
 
     async def _async_update_data(self) -> PowerwallData:
+        try:
+            return await self._async_fetch()
+        except UpdateFailed:
+            if not await self._async_reconnect_cloud():
+                raise
+        return await self._async_fetch()
+
+    async def _async_reconnect_cloud(self) -> bool:
+        """Replace a Cloud client with one rebuilt from the auth file; True if replaced.
+
+        pypowerwall never re-reads .pypowerwall.auth after connecting, and Tesla
+        invalidates a refresh token once it is used. So a client whose refresh token was
+        consumed by another client on the same file, or superseded by a re-run of
+        `pypowerwall setup`, keeps failing until it is rebuilt from the file. The old
+        client is dropped rather than closed: its close_session() logs out, which would
+        clear the shared token cache.
+        """
+        if self.conn_type != CONN_TYPE_CLOUD:
+            return False
+        if time.monotonic() - self._last_reconnect < CLOUD_RECONNECT_INTERVAL:
+            return False
+        self._last_reconnect = time.monotonic()
+        try:
+            self.pw = await async_connect_powerwall(
+                self.hass, self.conn_type, self.config_entry.data
+            )
+        except Exception:  # noqa: BLE001 - keep the original poll failure as the error
+            _LOGGER.debug("Reconnecting to Tesla Cloud failed", exc_info=True)
+            return False
+        _LOGGER.info("Reconnected to Tesla Cloud using the tokens in the auth file")
+        return True
+
+    async def _async_fetch(self) -> PowerwallData:
         try:
             data = await self.hass.async_add_executor_job(_fetch_data, self.pw, self.conn_type)
         except Exception as exc:  # noqa: BLE001 - pypowerwall raises plain Exception on failures
