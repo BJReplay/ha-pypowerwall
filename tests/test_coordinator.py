@@ -1,3 +1,4 @@
+import json
 import logging
 from unittest.mock import MagicMock, patch
 
@@ -308,6 +309,19 @@ class TestBuildPowerwallKwargs:
             "failover": False,
             "timeout": POWERWALL_REQUEST_TIMEOUT,
         }
+
+    def test_cloud_passes_the_email_the_auth_file_is_keyed_by(self, tmp_path):
+        (tmp_path / ".pypowerwall.auth").write_text(
+            json.dumps({"me@example.com": {"url": "https://auth.tesla.com/", "sso": {}}})
+        )
+        kwargs = build_powerwall_kwargs(CONN_TYPE_CLOUD, {CONF_AUTHPATH: str(tmp_path)})
+        assert kwargs["email"] == "me@example.com"
+
+    @pytest.mark.parametrize("contents", ["not json", "{}", "[]"])
+    def test_cloud_omits_email_when_auth_file_is_unusable(self, tmp_path, contents):
+        (tmp_path / ".pypowerwall.auth").write_text(contents)
+        kwargs = build_powerwall_kwargs(CONN_TYPE_CLOUD, {CONF_AUTHPATH: str(tmp_path)})
+        assert "email" not in kwargs
 
     def test_fleetapi_minimal(self):
         kwargs = build_powerwall_kwargs(CONN_TYPE_FLEETAPI, {CONF_AUTHPATH: "/auth"})
