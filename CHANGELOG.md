@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.13.2](https://github.com/jackrayner/ha-pypowerwall/compare/0.13.1...0.13.2) (2026-10-24)
+
+
+### Bug Fixes
+
+* pass the auth file's account email to pypowerwall in Cloud mode ([de04b50](https://github.com/jackrayner/ha-pypowerwall/commit/de04b507c456ace0a99d527da50966bbf8ecd5fe))
+* pass the auth file's account email to pypowerwall in Cloud mode ([3325701](https://github.com/jackrayner/ha-pypowerwall/commit/3325701226eb2c87c0a668f1e063908286106a5a))
+* rebuild the Cloud client from the auth file after a failed poll ([18df6f0](https://github.com/jackrayner/ha-pypowerwall/commit/18df6f03de197ce205fef33addea7ca6b9664da0))
+* rebuild the Cloud client from the auth file after a failed poll ([ed5dfb3](https://github.com/jackrayner/ha-pypowerwall/commit/ed5dfb3f1ede2c7d068978d1cdb6f9860d3e776e))
+
 ## [0.13.1](https://github.com/jackrayner/ha-pypowerwall/compare/0.13.0...0.13.1) (2026-10-18)
 
 
