@@ -10,6 +10,7 @@ from homeassistant.helpers.update_coordinator import UpdateFailed
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.pypowerwall.const import (
+    CLOUD_RECONNECT_INTERVAL,
     CONF_AUTHPATH,
     CONF_CONN_TYPE,
     CONF_GW_PWD,
@@ -383,6 +384,64 @@ async def test_update_data_logs_exception_before_raising_update_failed(
     assert "Error communicating with Powerwall" in caplog.text
     assert "AttributeError" in caplog.text
     assert "has no attribute 'foo'" in caplog.text
+
+
+class TestCloudReconnect:
+    POWERWALL = "custom_components.pypowerwall.coordinator.pypowerwall.Powerwall"
+
+    def _coordinator(self, hass: HomeAssistant, conn_type: str = CONN_TYPE_CLOUD):
+        entry = MockConfigEntry(
+            domain=DOMAIN, data={CONF_CONN_TYPE: conn_type, CONF_AUTHPATH: "/auth"}
+        )
+        entry.add_to_hass(hass)
+        stale = MagicMock()
+        stale.grid_status.side_effect = Exception("401 Unauthorized")
+        return PowerwallDataUpdateCoordinator(hass, entry, stale, 60), stale
+
+    async def test_failed_poll_rebuilds_the_client_from_the_auth_file(
+        self, hass: HomeAssistant, freezer
+    ):
+        coordinator, _ = self._coordinator(hass)
+        fresh = _make_pw()
+        freezer.tick(CLOUD_RECONNECT_INTERVAL)
+        with patch(self.POWERWALL, return_value=fresh):
+            data = await coordinator._async_update_data()
+
+        assert coordinator.pw is fresh
+        assert data.din == fresh.din.return_value
+
+    async def test_reconnects_at_most_once_per_interval(self, hass: HomeAssistant, freezer):
+        coordinator, stale = self._coordinator(hass)
+        broken = MagicMock()
+        broken.is_connected.return_value = False
+        freezer.tick(CLOUD_RECONNECT_INTERVAL)
+        with patch(self.POWERWALL, return_value=broken) as powerwall:
+            with pytest.raises(UpdateFailed):
+                await coordinator._async_update_data()
+            freezer.tick(CLOUD_RECONNECT_INTERVAL - 1)
+            with pytest.raises(UpdateFailed):
+                await coordinator._async_update_data()
+
+        assert powerwall.call_count == 1
+        assert coordinator.pw is stale
+
+    async def test_not_attempted_right_after_setup(self, hass: HomeAssistant):
+        coordinator, _ = self._coordinator(hass)
+        with patch(self.POWERWALL) as powerwall, pytest.raises(UpdateFailed):
+            await coordinator._async_update_data()
+
+        powerwall.assert_not_called()
+
+    @pytest.mark.parametrize("conn_type", [CONN_TYPE_FLEETAPI, CONN_TYPE_TEDAPI])
+    async def test_other_modes_keep_their_client(
+        self, hass: HomeAssistant, freezer, conn_type: str
+    ):
+        coordinator, _ = self._coordinator(hass, conn_type)
+        freezer.tick(CLOUD_RECONNECT_INTERVAL)
+        with patch(self.POWERWALL) as powerwall, pytest.raises(UpdateFailed):
+            await coordinator._async_update_data()
+
+        powerwall.assert_not_called()
 
 
 class TestExtractFans:

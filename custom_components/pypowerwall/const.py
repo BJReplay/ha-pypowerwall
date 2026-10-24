@@ -63,6 +63,11 @@ MANUFACTURER = "Tesla"
 # Passed to every connection type in coordinator.build_powerwall_kwargs().
 POWERWALL_REQUEST_TIMEOUT = 10
 
+# A Cloud client only reads .pypowerwall.auth when it connects, so after a failed poll
+# the coordinator rebuilds it from the file, at most this often (seconds), to pick up
+# tokens rotated by another client on the same file or a re-run of pypowerwall setup.
+CLOUD_RECONNECT_INTERVAL = 300
+
 # Max backup (storm watch) actions -- momentary, not persistent state, so they're
 # exposed as services (registered in __init__.py, v1r LAN mode only) rather than
 # entities. See pypowerwall.Powerwall.schedule_max_backup()/cancel_max_backup().
