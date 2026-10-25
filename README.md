@@ -3,6 +3,8 @@
 <img src="custom_components/pypowerwall/brand/icon.png" alt="pypowerwall icon" width="120" align="right" />
 
 [![GitHub release](https://img.shields.io/github/v/release/jackrayner/ha-pypowerwall)](https://github.com/jackrayner/ha-pypowerwall/releases)
+[![HACS](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://hacs.xyz/)
+[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=jackrayner&repository=ha-pypowerwall&category=integration)
 
 A [HACS](https://hacs.xyz/) custom integration for Home Assistant that connects to a Tesla Powerwall gateway using [pypowerwall](https://github.com/jasonacox/pypowerwall). Home Assistant polls the gateway (or Tesla's cloud) directly and exposes battery, grid, solar, and home power as native entities. Supports every connection mode pypowerwall offers: local TEDAPI, customer login, hybrid, cloud, FleetAPI, and TEDAPI v1r LAN.
 
@@ -10,8 +12,8 @@ A [HACS](https://hacs.xyz/) custom integration for Home Assistant that connects 
 
 ### Via HACS
 
-1. HACS → Integrations → ⋮ → Custom repositories → add this repo URL, category "Integration".
-2. Install "Tesla Powerwall (pypowerwall)" and restart Home Assistant.
+1. Click the "Open in HACS" badge above, or in HACS search for "Tesla Powerwall (pypowerwall)".
+2. Download it and restart Home Assistant.
 
 ### Manual
 

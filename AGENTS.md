@@ -38,7 +38,7 @@ There is no way to run this integration standalone outside Home Assistant — it
 
 ## Structure
 
-- `custom_components/pypowerwall/` — the integration itself (manifest, config flow, coordinator, all entity platforms, brand assets, translations). See [`custom_components/pypowerwall/AGENTS.md`](./custom_components/pypowerwall/AGENTS.md) for file-by-file rationale.
+- `custom_components/pypowerwall/` — the integration itself (manifest, config flow, coordinator, all entity platforms, brand assets, translations). See [`docs/AGENTS-integration.md`](./docs/AGENTS-integration.md) for file-by-file rationale.
 - `hacs.json` — HACS repository metadata (minimum HA version, etc.).
 - `tests/` — pytest suite against `pytest-homeassistant-custom-component`. See [`tests/AGENTS.md`](./tests/AGENTS.md) for how the mocking and test architecture work.
 
