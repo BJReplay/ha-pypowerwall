@@ -1,6 +1,6 @@
-# AGENTS.md — custom_components/pypowerwall/
+# Integration notes — custom_components/pypowerwall/
 
-Detailed, file-by-file rationale for this integration's implementation. See the [root AGENTS.md](../../AGENTS.md) for project-wide commands, release process, and conventions.
+Detailed, file-by-file rationale for this integration's implementation. See the [root AGENTS.md](../AGENTS.md) for project-wide commands, release process, and conventions.
 
 ## Files
 
