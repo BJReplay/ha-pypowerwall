@@ -28,9 +28,7 @@ async def async_setup_entry(
                 PowerwallDispatchDurationNumber(coordinator),
             ]
         )
-    async_add_entities(
-        entities
-    )
+    async_add_entities(entities)
 
 
 class PowerwallReserveNumber(PowerwallEntity, NumberEntity):

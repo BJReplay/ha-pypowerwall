@@ -124,7 +124,9 @@ async def test_dispatch_buttons_use_number_values_and_resume_normal_operation(
         blocking=True,
     )
 
-    await hass.services.async_call("button", "press", {"entity_id": start_dispatch_id}, blocking=True)
+    await hass.services.async_call(
+        "button", "press", {"entity_id": start_dispatch_id}, blocking=True
+    )
     await hass.async_block_till_done()
 
     pw.dispatch_battery_power.assert_called_once_with(1200, 240)
@@ -260,10 +262,7 @@ async def test_cloud_entry_has_no_v1r_services(hass: HomeAssistant) -> None:
     assert registry.async_get_entity_id("number", DOMAIN, f"{DIN}_power_watts") is None
     assert registry.async_get_entity_id("number", DOMAIN, f"{DIN}_duration_seconds") is None
     assert registry.async_get_entity_id("button", DOMAIN, f"{DIN}_start_dispatch") is None
-    assert (
-        registry.async_get_entity_id("button", DOMAIN, f"{DIN}_resume_normal_operation")
-        is None
-    )
+    assert registry.async_get_entity_id("button", DOMAIN, f"{DIN}_resume_normal_operation") is None
 
 
 async def test_v1r_entry_registers_and_calls_max_backup_services(hass: HomeAssistant) -> None:
